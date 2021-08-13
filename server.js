@@ -1,25 +1,29 @@
-// 'use strict';
-const  express =  require ('express');
-const server = express();
-const cors = require('cors');
+'use strict'
 
 require('dotenv').config();
+const express = require('express');
+const server = express();
+// const weatherData = require('./data/weather.json')
+const cors = require('cors');
+const PORT = process.env.PORT
 const axios = require('axios')
-const PORT =process.env.PORT
-server.use(cors()); 
 const movies = require('./movies');
 const weather = require('./weather');
+server.use(cors())
+
 // http://localhost:3001/test
-server.get('/test',(req,res) => {
-  res.send('test route');
-});
-server.get('/getWeather',weather.WeatherHandler); 
-// function getWeatherHandler(req, res) {
-//   const weatherKey =process.env.WEATHER_API_KEY
-//   const cityName = req.query.cityName
-//   const lon = req.query.lon
-//   const lat = req.query.lat
-//   const URL = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityName}&lat=${lat}&lon=${lon}&key=${weatherKey}`;
+// server.get('/test',(req,res) => {
+//   res.send('test route');
+// });
+
+//http://localhost:3000/getWeather?lat=31.95&lon=35.91&cityName=amman
+server.get('/getWeather', weather.getWeatherHandler)
+
+
+
+// http://localhost:3000/movies?city=Amman
+server.get('/movies', movies)
+
 
   
 // }
@@ -54,9 +58,6 @@ server.get('/getWeather',weather.WeatherHandler);
 
 
 
-
-// // http://localhost:3001/getmovie?city=${city}
-server.get('/movie',movies); 
 
 
 
@@ -115,42 +116,6 @@ server.get('/movie',movies);
 
 
 
-// // http://localhost:3001/
-// // server.get('*',(req,res) => {
-// //   res.status(404).send('route not found');
-// // });
-// // // http://localhost:3000/weather
-
-
-// // server.get('/weather',WeatherFunction);
-// // server.use('*', (req, res) => res.status(404).send('page not found'));
-
-
-// //  function WeatherFunction (req,res){
-// //   let searchQuery = req.query.searchQuery;
-// //          const city= weatherData.find(city=> city.city_name.toLocaleLowerCase()=== searchQuery.toLocaleLowerCase());
-// // if (city != undefined){
-// // const arr = city.data.map(day => new update(day));
-// // res.status(200).send(arr);
-
-// // }
-// // else {
-// // errorHandler(res);
-// // }
-// //  }
-// //  function errorHandler(err) {
-// //   response.status(500).send('err');
-// // }
-   
-
-
-
-// // function update(day) {
-// //   this.date = day.valid_date
-// //   this.description = day.weather.description
-// // }
-
-// // //https://api.themoviedb.org/3/movie/550?api_key=4b557fce5a80bc4685790b5ceb6c8804
 
 server.get('*', (req, res) => {
   res.send('not found');
