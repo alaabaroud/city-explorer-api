@@ -119,6 +119,7 @@ server.get('/movies', movies)
 
 server.get('*', (req, res) => {
   res.send('not found');
+  
 })
 
 server.listen(PORT, () => console.log(`listening on ${PORT}`))
